@@ -21,21 +21,64 @@ function validateName() {
 }
 
 function validatePhone() {
-  let phone = document.getElementById('contact-phone');
+  let phone = document.getElementById('contact-phone').value;
 
   if (phone.length === 0) {
     phoneError.innerHTML = 'Phone Number is required.';
     return false;
   }
   if (phone.length !== 10) {
-    phoneError.innerHTML = 'Phone Number should be 11 digits.';
+    phoneError.innerHTML = 'Number should be 10 digits.';
     return false;
   }
   if (!phone.match(/^[0-9]{10}$/)) {
-    phoneError.innerHTML = 'Please enter only digits.';
+    phoneError.innerHTML = 'Only digits.';
     return false;
   }
 
   phoneError.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #2e8b57;"></i>';
   return true;
+}
+
+function validateEmail() {
+  let email = document.getElementById('contact-email').value;
+
+  if (email.length === 0) {
+    emailError.innerHTML = 'Email is required.';
+    return false;
+  }
+  if (!email.match(/^[A-Za-z\._\-[0-9]*[@][A-Za-z]*[\.][a-z]{2,4}$/)) {
+    emailError.innerHTML = "Invalid Email Format";
+    return false;
+  }
+
+  emailError.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #2e8b57;"></i>';
+  return true;
+}
+
+function validateMessage() {
+  let message = document.getElementById('contact-message').value;
+
+  let required = 30;
+  let left = required - message.length;
+
+  if (left > 0) {
+    messageError.innerHTML = left + ' more characters required.';
+    return false;
+  }
+
+  messageError.innerHTML = '<i class="fa-solid fa-circle-check" style="color: #2e8b57;"></i>';
+  return true;
+}
+
+function validateForm() {
+  if (!validateName() || !validatePhone() || !validateEmail() || !validateMessage()) {
+    submitError.style.display = 'block';
+    submitError.innerHTML = 'Please fix error to submit.';
+
+    setTimeout(function () {
+      submitError.style.display = 'none';
+    }, 3000)
+    return false;
+  }
 }
